@@ -3,12 +3,14 @@ import { ControlValueAccessor } from '@angular/forms'
 export class NgModelBase implements ControlValueAccessor {
   public onTouchedCallback: () => {}
   public onChangeCallback: (_: any) => {}
+  protected onInputCallback: (value: any) => void
   public _innerValue: any
 
   set value(v: any) {
     if (v !== this._innerValue) {
       this._innerValue = v
       this.onChangeCallback(v)
+      this.onInputCallback(v)
     }
   }
 

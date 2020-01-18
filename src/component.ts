@@ -35,7 +35,7 @@ const SIMPLEMDE_CONTROL_VALUE_ACCESSOR: any = {
   ]
 })
 export class Simplemde extends NgModelBase implements AfterViewInit, OnDestroy {
-  @ViewChild('simplemde') textarea: ElementRef
+  @ViewChild('simplemde') public textarea: ElementRef
   @Input() options: SimpleMDE.Options = {}
   @Input() codemirror: any = {}
 
@@ -85,6 +85,15 @@ export class Simplemde extends NgModelBase implements AfterViewInit, OnDestroy {
     @Inject(SIMPLEMDE_CONFIG) private config
   ) {
     super()
+
+    this.onInputCallback = (_: any) => {
+      const event = new Event('input', {
+        bubbles: true,
+        cancelable: true
+      })
+
+      this.textarea.nativeElement.dispatchEvent(event)
+    }
   }
 
 }
